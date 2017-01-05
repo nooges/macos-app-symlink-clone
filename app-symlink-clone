@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+# TODO: Accept input app and output path
+input_path = '/Applications/Xcode.app'
+output_path = File.expand_path('~/Applications/Xcode-unsigned.app')
+
+# Create directory for unsigned clone
+output_path_contents = File.join(output_path, 'Contents')
+output_path_binaries = File.join(output_path_contents, 'MacOS')
+FileUtils.mkdir_p(output_path_binaries)
+
+# Create clone of app using symlinks
+contents_entries = Dir[File.join(input_path, 'Contents/*')].reject { |e| File.basename(e) == 'MacOS' }
+FileUtils.ln_s(contents_entries, output_path_contents)
+
+# Create unsigned copy of app binaries
+unsign_binary = File.join(File.dirname(__FILE__), 'bin/unsign')
+Dir[File.join(input_path, 'Contents/MacOS/*')].each do |binary_file|
+  output_file = File.join(output_path_binaries, File.basename(binary_file))
+  %x(#{unsign_binary} #{binary_file} #{output_file})
+end
