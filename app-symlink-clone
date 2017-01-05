@@ -1,9 +1,14 @@
 #!/usr/bin/env ruby
 require 'fileutils'
 
-# TODO: Accept input app and output path
-input_path = '/Applications/Xcode.app'
-output_path = File.expand_path('~/Applications/Xcode-unsigned.app')
+# Accept input app and output path
+unless ARGV.length == 2
+  puts "Usage: #{$0} Original.app Unsigned-clone.app"
+  exit
+end
+
+input_path = ARGV[0]
+output_path = ARGV[1]
 
 # Create directory for unsigned clone
 output_path_contents = File.join(output_path, 'Contents')

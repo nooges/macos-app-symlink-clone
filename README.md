@@ -12,6 +12,9 @@ This was originally written with Xcode 8 in mind, since it disables the ability 
 
     [sudo] ./app-symlink-clone Original.app Unsigned-clone.app
 
+    # Example:
+    ./app-symlink-clone /Applications/Xcode.app ~/Applications/Xcode-unsigned.app
+
 ## TODOs
 
 - Allow app icon of unsigned clone to be specified
