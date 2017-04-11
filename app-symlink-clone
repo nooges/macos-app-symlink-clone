@@ -2,13 +2,14 @@
 require 'fileutils'
 
 # Accept input app and output path
-unless ARGV.length == 2
-  puts "Usage: #{$0} Original.app Unsigned-clone.app"
+unless ARGV.length >= 2
+  puts "Usage: #{$0} Original.app Unsigned-clone.app [custom icon file]"
   exit
 end
 
 input_path = ARGV[0]
 output_path = ARGV[1]
+icon_file = ARGV[2]
 
 # Create directory for unsigned clone
 output_path_contents = File.join(output_path, 'Contents')
@@ -17,11 +18,17 @@ FileUtils.mkdir_p(output_path_binaries)
 
 # Create clone of app using symlinks
 contents_entries = Dir[File.join(input_path, 'Contents/*')].reject { |e| File.basename(e) == 'MacOS' }
-FileUtils.ln_s(contents_entries, output_path_contents)
+FileUtils.ln_sf(contents_entries, output_path_contents)
 
 # Create unsigned copy of app binaries
 unsign_binary = File.join(File.dirname(__FILE__), 'bin/unsign')
 Dir[File.join(input_path, 'Contents/MacOS/*')].each do |binary_file|
   output_file = File.join(output_path_binaries, File.basename(binary_file))
   %x(#{unsign_binary} #{binary_file} #{output_file})
+end
+
+# Add custom icon if specified
+unless icon_file.nil?
+  fileicon_binary = File.join(File.dirname(__FILE__), 'bin/fileicon')
+  %x(#{fileicon_binary} set #{output_path} #{icon_file})
 end
