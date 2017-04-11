@@ -10,10 +10,10 @@ This was originally written with Xcode 8 in mind, since it disables the ability 
 
 ## Usage
 
-    [sudo] ./app-symlink-clone Original.app Unsigned-clone.app
+    [sudo] ./app-symlink-clone Original.app Unsigned-clone.app [custom icon file]
 
     # Example:
-    ./app-symlink-clone /Applications/Xcode.app ~/Applications/Xcode-unsigned.app
+    ./app-symlink-clone /Applications/Xcode.app ~/Applications/Xcode-unsigned.app XcodeUnsigned.png
 
 ## TODOs
 
