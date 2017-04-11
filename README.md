@@ -15,10 +15,6 @@ This was originally written with Xcode 8 in mind, since it disables the ability 
     # Example:
     ./app-symlink-clone /Applications/Xcode.app ~/Applications/Xcode-unsigned.app XcodeUnsigned.png
 
-## TODOs
-
-- Allow app icon of unsigned clone to be specified
-
 ## Credits
 
 Special thanks to [steakknife's unsign](https://github.com/steakknife/unsign) and [johntmcintosh's xcunsign](https://github.com/johntmcintosh/xcunsign).
